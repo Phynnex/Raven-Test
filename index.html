@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css"> <!-- Ensure this path is correct -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Include AnyChart library -->
+    <script src="https://cdn.anychart.com/releases/8.10.0/js/anychart-bundle.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav>
+                <div class="header_logo">Raven Logo</div>
+                <ul>
+                    <li><a href="#dashboard">Dashboard</a></li>
+                    <li><a href="#markets">Markets</a></li>
+                    <li><a href="#wallet">Wallet</a></li>
+                    <li><a href="#profile">Profile</a></li>
+                </ul>
+                <input type="text" id="search-input" placeholder="Search trading pairs...">
+            </nav>
+            <!-- Gravatar Authentication Form -->
+            <section id="auth-section">
+                <form id="auth-form">
+                    <input type="email" id="email-input" placeholder="Enter your email" required />
+                    <button type="submit">Get Gravatar</button>
+                </form>
+
+                <div id="gravatar" class="header_gravatar"></div>
+            </section>
+        </header>
+
+        <!-- Trading Pairs List -->
+        <section id="trading-pairs-section">
+            <h3>Trading Pairs</h3>
+            <ul id="trading-pairs-list">
+                <!-- Example trading pairs -->
+                <li class="trading-pair">BTC/USD</li>
+                <li class="trading-pair">ETH/USD</li>
+                <li class="trading-pair">XRP/USD</li>
+                <li class="trading-pair">LTC/USD</li>
+            </ul>
+        </section>
+
+        <!-- Time Interval Selection -->
+        <section id="time-intervals">
+            <h3>Select Time Interval:</h3>
+            <button class="time-interval" data-interval="1m">1 Minute</button>
+            <button class="time-interval" data-interval="5m">5 Minutes</button>
+            <button class="time-interval" data-interval="15m">15 Minutes</button>
+            <button class="time-interval" data-interval="1h">1 Hour</button>
+        </section>
+
+        <main>
+            <!-- Candlestick chart, trading pairs list, order book -->
+            <div id="chart-container" style="width: 100%; height: 400px;"></div> <!-- Chart container -->
+            <div class="card main_orderbook">Order book</div>
+            <div class="card main_buy_and_sell">
+                <!-- Buy/Sell Order Form -->
+                <p>Place Order</p>
+                <label for="price">Price:</label>
+                <input type="number" id="price" placeholder="Enter price">
+                <br/>
+                <label for="amount">Amount:</label>
+                <input type="number" id="amount" placeholder="Enter amount">
+                <p>Total Value: <span id="total-value">0</span></p> <!-- Display total value -->
+            </div>
+
+        </main>
+
+        <footer>
+            <p>&copy; 2024 Raven. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Include the JavaScript for interactivity -->
+    <script src="script.js"></script> 
+</body>
+</html>
