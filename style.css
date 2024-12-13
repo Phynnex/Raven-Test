@@ -1,137 +1,380 @@
-body {
-    font-family: Arial, sans-serif;
+/* Reset styles */
+* {
     margin: 0;
-    background-color: #1C2127;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #1e1e1e;
+    color: #f1f1f1;
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Ensure body takes full height */
-}
-
-.container {
-    padding: 20px;
-    flex: 1; /* Allow container to grow and take available space */
-}
-
-header {
-    color: white;
-    height: 80px;
+    /* min-height: 100vh; */
+  }
+  
+  /* Header styles */
+  .header {
+    background-color: #1C2127;
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.header_logo {
-    font-size: 24px; 
-}
-
-nav{
-    height: 80px;
+    padding: 1rem;
+    border-bottom: 1px solid #32383F;
+  }
+  
+  .header__logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .header__nav {
     display: flex;
-    align-items: center;
-}
-
-nav ul {
-    list-style: none;
-    display: flex;
-    align-items: center;
-}
-
-nav ul li {
-    margin-right: 20px;
-}
-
-nav ul li a {
-    color: white;
+    gap: 1rem;
+  }
+  
+  .header__nav-link {
+    color: #f1f1f1;
     text-decoration: none;
-}
-
-input[type="text"] {
-    padding: 5px;
-}
-
-form button{
-    background-color: #12171D;
-    color: #fff;
-}
-
-
-input {
-    background-color: #12171D;
-    outline: none;
-}
-
-.header_gravatar{
-    background-color: #12171D;
-    padding: 4px 8px;
+    font-weight: bold;
+  }
+  
+  .header__nav-link:hover {
+    text-decoration: underline;
+  }
+  
+  .header__search-bar {
+    display: flex;
+    align-items: center;
+  }
+  
+  .header__search-input {
+    padding: 0.5rem;
+    border: none;
+    border-radius: 4px;
+    background-color: #3d3d3d;
+    color: #f1f1f1;
+  }
+  
+  .header__user-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #1e1e1e;
+    padding: 1rem;
     border-radius: 8px;
+    color: #A7B1BC;
+  }
+  
+  .header__user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  
+  .header__user-email {
+    font-size: 1rem;
+    color: #f1f1f1;
+  }
+  
+.trading-pairs{
+  width: 99%;
+  background-color: #20252B;
+  border-radius: .5rem;
+  margin: .5rem;
 }
+  
+  /* Dropdown styles */
+  .trading-pairs-dropdown {
+    margin: 1rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .trading-pairs-dropdown__select {
+    width: 10%;
+    padding: 0.5rem;
+    border-radius: 4px;
+    background-color: #20252B;
+    color: #f1f1f1;
+    border: none;
+    z-index: 999;
+    outline: none;
+  font-size: 24px;
 
-main {
+  }
+  
+  .trading-pair-stats{
+    width: 50%;
     display: flex;
     justify-content: space-between;
-    gap: 12px;
-}
+    align-items: center;
+    text-align: left;
+  }
 
-.card {
+  .trading-pair-stats p {
+    font-size: 12px;
+    color: #A7B1BC;
+  }
+
+  .trading-pair-stats p {
+    font-size: 14px;
+  }
+
+  .trading-pair-stats hr {
+    height: 40px; width: 0.5px; color: #EAF0FE; opacity: 4%;
+  }
+
+  .trading-pair-current-price{
+color: #00C076;
+font-size: 20px;
+
+  }
+  /* Main content styles */
+  .dashboard {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 1rem;
+    padding: 1rem;
+  }
+ 
+  
+  .dashboard__chart-container,
+  .dashboard__order-book,
+  .dashboard__order-form {
     background-color: #20252B;
+    padding: 1rem;
     border-radius: 8px;
-    padding: 8px;
-}
+  }
+  
+  .dashboard__chart-title,
+  .dashboard__order-book-title,
+  .dashboard__order-form-title {
+    margin-bottom: 1rem;
+  }
+  
+  .dashboard__time-intervals {
+    margin-bottom: 1rem;
+  }
+  
+  .dashboard__interval-button {
+    background-color: #20252B;
+    border: 1px solid #20252B;
+    padding: 5px 10px;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #A7B1BC;
+  }
+  
+  .dashboard__interval-button:hover {
+    background-color: #3d3d3d;
+  }
+  
+  .dashboard__order-input {
+    width: calc(100% - 2rem);
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    background-color: #3d3d3d;
+    color: #f1f1f1;
+    border: none;
+    border-radius: 4px;
+  }
+  
+  .dashboard__order-button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #28a745;
+    color: #f1f1f1;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  
+  .dashboard__order-button--sell {
+    background-color: #dc3545;
+    margin-top: 0.5rem;
+  }
+  
+  .dashboard__order-button:hover {
+    opacity: 0.9;
+  }
 
-.main_chart {
-    width: 50%;
-}
-
-.main_orderbook {
-    width: 20%;
-}
-
-.main_buy_and_sell{
-    width: 30%;
-}
-
-.tradingPairs {
-    width: 68.25%;
-}
-
-/* Add this to your existing style.css file */
-
-#trading-pairs-section {
+  .order-book-content {
     display: flex;
-    margin: 20px 0;
+    flex-direction: column;
+  }
+  
+  .sell-orders, .buy-orders {
+    margin-bottom: 10px;
+  }
+  
+  .sell-orders h4, .buy-orders h4 {
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .sell-orders div, .buy-orders div {
+    padding: 2px 0;
+  }
+  
+  /* Footer styles */
+  .footer {
+    background-color: #20252B;
+    color: #f1f1f1;
+    text-align: center;
+    padding: 1rem;
+    margin-top: auto;
+  }
+  
+  /* Authentication screen styles */
+  .auth-screen {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #1e1e1e;
+  }
+  
+  .auth-screen--active {
+    display: flex;
+  }
+  
+  .auth-screen__form {
+    background-color: #2d2d2d;
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  .auth-screen__input {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    background-color: #3d3d3d;
+    color: #f1f1f1;
+    border: none;
+    border-radius: 4px;
+  }
+  
+  .auth-screen__button {
+    background-color: #007bff;
+    color: #f1f1f1;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .auth-screen__button:hover {
+    background-color: #0056b3;
+  }
+
+
+  /* Tabs styling */
+.tabs {
+  display: flex;
+  margin-bottom: 20px;
+  background-color: #1e1e1e;
+  padding: 8px;
+  border-radius: 8px;
 }
 
-#trading-pairs-dropdown {
-    margin-right: 20px; /* Space between dropdown and time interval buttons */
+.tab-button {
+  padding: 10px 20px;
+  margin-right: 10px;
+  cursor: pointer;
+background-color: #21262C;
+
+  border-radius: 8px;
+  outline: none;
+  color: #f1f1f1;
 }
 
-#time-intervals {
-    display: flex; /* Use flexbox for horizontal alignment */
+.tab-button:hover {
+  background-color: #ddd;
+
 }
 
-.time-interval {
-    margin-right: 10px; /* Space between time interval buttons */
+.tab-button:active {
+  background-color: #21262C;
+  outline: none;
+  
+
+}
+
+/* Active tab content styling */
+.tab-content {
+  display: none;
+}
+
+/* Order Book Table styling */
+.order-book-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.order-book-table th, .order-book-table td {
+  padding: 10px;
+  text-align: left;
+ 
+ 
+}
+
+.order-book-table th {
+  font-size: 9px;
+  color: #A7B1BC;
 }
 
 
-
-
-/* Footer Styles */
-footer {
-    background-color: #333; /* Add background color for visibility */
-    color: white; 
-    text-align: center; 
-    padding: 10px; 
-    position: fixed; 
-    bottom: 0; 
-    left: 0; 
-    right: 0; /* Ensure footer spans full width */
+.order-book-table tr {
+  font-size: 12px;
+  color: #A7B1BC;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .header {
-        flex-direction: column;
-        align-items: flex-start; /* Align items to start in smaller screens */
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .dashboard {
+      grid-template-columns: 1fr;
     }
+  
+    .trading-pairs-dropdown {
+      margin: 1rem;
+    }
+  
+    .dashboard__chart-container,
+    .dashboard__order-book,
+    .dashboard__order-form {
+      padding: 0.5rem;
+    }
+  }
+
+
+  @media (max-width: 768px) {
+  .header__nav {
+    display: none; /* Hide nav by default */
+    flex-direction: column; /* Stack links vertically */
+    position: absolute; /* Position it absolutely */
+    top: 60px; /* Adjust based on header height */
+    left: 0;
+    right: 0;
+    background-color: #1C2127; /* Match header background */
+    padding: 1rem;
+    z-index: 1000; /* Ensure it appears above other content */
+  }
+
+  .header__nav-link {
+    margin-bottom: 10px; /* Space between links */
+  }
+
+  .header__hamburger {
+    display: flex; /* Show hamburger icon on smaller screens */
+  }
 }
