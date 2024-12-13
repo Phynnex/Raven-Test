@@ -49,9 +49,8 @@ function filterTradingPairs() {
     'BTCUSDT': 'Bitcoin',
     'ETHUSDT': 'Ethereum', 
     'BNBUSDT': 'Binance Coin',
-    'ADAUSDT': 'Cardano',
     'DOGEUSDT': 'Dogecoin',
-    'XRPUSDT': 'Ripple'
+
   };
 
   // Hide/show options based on search input
@@ -151,19 +150,98 @@ function changeInterval(interval) {
 
 // Call this function when the page loads
 window.onload = function() {
-  // Set default pair to BTC/USDT
-  const defaultPair = 'BTC/USDT';
+  // Explicitly set default pair to BTC/USDT
+  const defaultPair = 'BTCUSDT';
+  
+  // Set the dropdown to the default pair
+  const dropdown = document.getElementById('trading-pairs-dropdown');
+  if (dropdown) {
+    dropdown.value = defaultPair;
+  }
+  
+  // Fetch ticker data and candlestick data for BTC/USDT
   fetchTickerData(defaultPair);
-  fetchCandlestickData(); // Optional, if you need it
+  fetchCandlestickData();
+  
+  // Show the Order Book tab
+  showTab('order-book');
+  updateOrderBook(); // Populate the order book
+  updateRecentOrders(); // Populate recent orders (if needed)
 };
 
+
 function updateTradingPair() {
+  // Get the selected pair from the dropdown
   const selectedPair = document.getElementById('trading-pairs-dropdown').value;
+  
+  // Update global current pair
+  currentPair = selectedPair;
+  
+  // Fetch and update all components
   fetchTickerData(selectedPair);
-  fetchCandlestickData(); // Optional, if you need it
+  fetchCandlestickData();
+  
+  // Optional: Reset order form to reflect new pair's current price
+
+  updateCurrentPrice(defaultPrice);
 }
 
+
+
+
+
+// function fetchTickerData(pair) {
+//   const coinId = getCoinIdFromPair(pair);
+//   const apiUrl = `https://api.coingecko.com/api/v3/coins/${coinId}?localization=false&tickers=true&market_data=true&community_data=false&developer_data=false&sparkline=false`;
+
+//   fetch(apiUrl)
+//     .then(response => {
+//       if (!response.ok) {
+//         throw new Error(`HTTP error! status: ${response.status}`);
+//       }
+//       return response.json();
+//     })
+//     .then(data => {
+//       // Extract market data
+//       const marketData = data.market_data;
+      
+//       if (marketData) {
+//         const priceChangePercent24h = marketData.price_change_percentage_24h;
+//         const high24h = marketData.high_24h.usd;
+//         const low24h = marketData.low_24h.usd;
+//         const volume24h = marketData.total_volume.usd;
+//         const currentPrice = marketData.current_price.usd;
+
+//         // Update ticker stats
+//         updateTickerStats(
+//           currentPrice.toFixed(2),
+//           priceChangePercent24h.toFixed(2), 
+//           high24h.toFixed(2), 
+//           low24h.toFixed(2), 
+//           volume24h
+//         );
+        
+//         // Update the order form price
+//         updateCurrentPrice(currentPrice);
+//       } else {
+//         console.error('No market data available');
+//       }
+//     })
+//     .catch(error => {
+//       console.error('Error fetching ticker data:', error);
+      
+//       // Fallback to default values or error state
+//       updateTickerStats('N/A', 'N/A', 'N/A', 'N/A', 'N/A');
+      
+
+//       updateCurrentPrice(defaultPrice);
+//     });
+// }
+
+
+
 function fetchTickerData(pair) {
+  // Ensure the pair is in the correct format for CoinGecko API
   const coinId = getCoinIdFromPair(pair);
   const apiUrl = `https://api.coingecko.com/api/v3/coins/${coinId}?localization=false&tickers=true&market_data=true&community_data=false&developer_data=false&sparkline=false`;
 
@@ -193,15 +271,22 @@ function fetchTickerData(pair) {
           low24h.toFixed(2), 
           volume24h
         );
+        
+        // Update the order form price
+        updateCurrentPrice(currentPrice);
       } else {
         console.error('No market data available');
+        // Fallback to Bitcoin default values
+        updateTickerStats('50000.00', '0.00', '51000.00', '49000.00', '1000000');
+        updateCurrentPrice(50000);
       }
     })
     .catch(error => {
       console.error('Error fetching ticker data:', error);
       
-      // Fallback to default values or error state
-      updateTickerStats('N/A', 'N/A', 'N/A', 'N/A', 'N/A');
+      // Fallback to default Bitcoin values
+      updateTickerStats('50000.00', '0.00', '51000.00', '49000.00', '1000000');
+      updateCurrentPrice(50000);
     });
 }
 
@@ -218,13 +303,24 @@ function updateTickerStats(currentPrice, change24h, high24h, low24h, volume24h) 
   document.getElementById('volume-24h').textContent = `$${Number(volume24h).toLocaleString()}`;
 }
 
+// function getCoinIdFromPair(pair) {
+//   const pairToCoinId = {
+//     'BTCUSDT': 'bitcoin',
+//     'ETHUSDT': 'ethereum',
+//     'BNBUSDT': 'binancecoin',
+//     'DOGEUSDT': 'dogecoin',
+  
+//   };
+//   return pairToCoinId[pair] || 'bitcoin';
+// }
+
+
 function getCoinIdFromPair(pair) {
   const pairToCoinId = {
     'BTCUSDT': 'bitcoin',
     'ETHUSDT': 'ethereum',
     'BNBUSDT': 'binancecoin',
-    'DOGEUSDT': 'dogecoin',
-  
+    'DOGEUSDT': 'dogecoin'
   };
   return pairToCoinId[pair] || 'bitcoin';
 }
@@ -237,11 +333,15 @@ const intervalToDays = {
   '1h': 30
 };
 
+
+
+
 function fetchCandlestickData() {
   const coinMapping = {
     'BTCUSDT': 'bitcoin',
     'ETHUSDT': 'ethereum',
-    'BNBUSDT': 'binancecoin'
+    'BNBUSDT': 'binancecoin',
+    'DOGEUSDT': 'dogecoin'
   };
 
   const coinId = coinMapping[currentPair] || 'bitcoin';
@@ -399,21 +499,6 @@ function initializeChart(data) {
   chart.timeScale().fitContent();
 }
 
-// function updateOrderBook() {
-//   const orderBookContent = document.getElementById('order-book-content');
-
-//   // Clear the order book content
-//   orderBookContent.innerHTML = '';
-
-//   // Display the buy and sell orders
-//   ['buy', 'sell'].forEach(type => {
-//     orders[type].forEach(order => {
-//       const orderElement = document.createElement('div');
-//       orderElement.textContent = `${order.type.toUpperCase()} | ${order.amount} | ${order.price.toFixed(2)}`;
-//       orderBookContent.appendChild(orderElement);
-//     });
-//   });
-// }
 
 
 function showTab(tabName) {

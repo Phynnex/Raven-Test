@@ -11,7 +11,8 @@
     color: #f1f1f1;
     display: flex;
     flex-direction: column;
-    /* min-height: 100vh; */
+    min-height: 100vh;
+    overflow-x: hidden;
   }
   
   /* Header styles */
@@ -20,7 +21,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
+    padding: 0rem 2rem;
     border-bottom: 1px solid #32383F;
   }
   
@@ -222,6 +223,8 @@ font-size: 20px;
   .sell-orders div, .buy-orders div {
     padding: 2px 0;
   }
+
+  
   
   /* Footer styles */
   .footer {
@@ -291,7 +294,7 @@ font-size: 20px;
   margin-right: 10px;
   cursor: pointer;
 background-color: #21262C;
-
+border: none;
   border-radius: 8px;
   outline: none;
   color: #f1f1f1;
